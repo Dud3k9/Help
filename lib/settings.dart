@@ -52,6 +52,9 @@ class _SettingsState extends State<Settings> {
               height: maxHeight*0.4,
               child: Column(
                 children: <Widget>[
+                  Text('Contact:',style: TextStyle(fontSize: 20),),
+                  SizedBox(height: 5,),
+                  Text('email: kdhrt1@gmail.com',style: TextStyle(fontSize: 15),)
                 ],
               ),
             ),

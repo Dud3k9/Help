@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
@@ -29,10 +30,8 @@ class _LoginState extends State<Login> {
                     SizedBox(
                       height: 40,
                     ),
-                    Text(
-                      'TODO LOGO AND NAME',
-                      style: TextStyle(fontSize: 20, color: Colors.white),
-                    ),
+                    Image(image: AssetImage('assets/logo.png'),
+                    height: 150,),
                     SizedBox(
                       height: 60,
                     ),
@@ -42,7 +41,7 @@ class _LoginState extends State<Login> {
                           fontSize: 35, color: Colors.white, letterSpacing: 2),
                     ),
                     SizedBox(
-                      height: 150,
+                      height: 100,
                     ),
                     SignInButton(
                       Buttons.Google,
@@ -60,6 +59,15 @@ class _LoginState extends State<Login> {
                           sharedPreferences.setBool('IsLogIn', true);
                           sharedPreferences.setString('uid', auth.fUser.uid);
                           Database.setUser(auth.fUser);
+
+                          Location location=Location();
+
+
+                          bool hasPermission=await location.hasPermission();
+                          if(!hasPermission){
+                            await location.requestPermission();
+                          }
+
                           Future.delayed(Duration(seconds: 2), () {
                             Navigator.pushReplacementNamed(context, '/Start');
                           });
@@ -71,12 +79,12 @@ class _LoginState extends State<Login> {
                     SizedBox(
                       height: 10,
                     ),
-                    SignInButton(
-                      Buttons.Facebook,
-                      onPressed: () {},
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-                    )
+//                    SignInButton(
+//                      Buttons.Facebook,
+//                      onPressed: () {},
+//                      padding:
+//                          EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+//                    )
                   ],
                 )),
           ),

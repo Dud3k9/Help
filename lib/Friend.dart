@@ -88,22 +88,28 @@ class _AddFriendItemState extends State<AddFriendItem> {
       sharedPreferences.setStringList('name', List<String>());
       sharedPreferences.setStringList('photo', List<String>());
     }
+
+    List uidList = sharedPreferences.getStringList('UID');
+    List nameList = sharedPreferences.getStringList('name');
+    List photoList = sharedPreferences.getStringList('photo');
+
     if (!sharedPreferences.getStringList('UID').contains(uid)) {
-      List uidList = sharedPreferences.getStringList('UID');
-      List nameList = sharedPreferences.getStringList('name');
-      List photoList = sharedPreferences.getStringList('photo');
+
       uidList.add(uid);
       nameList.add(name);
       photoList.add(photo);
-      sharedPreferences.setStringList('UID', uidList);
-      sharedPreferences.setStringList('name', nameList);
-      sharedPreferences.setStringList('photo', photoList);
+
     } else {
       int index = sharedPreferences.getStringList('UID').indexOf(uid);
-      sharedPreferences.getStringList('UID').removeAt(index);
-      sharedPreferences.getStringList('name').removeAt(index);
-      sharedPreferences.getStringList('photo').removeAt(index);
+      uidList.removeAt(index);
+      nameList.removeAt(index);
+      photoList.removeAt(index);
     }
+
+    sharedPreferences.setStringList('UID', uidList);
+    sharedPreferences.setStringList('name', nameList);
+    sharedPreferences.setStringList('photo', photoList);
+
   }
 
   void isfriend(String uid) async {
